@@ -1,4 +1,3 @@
-#returns the factorial of a given number
 def factorial (number):
     for index in range(2, number):
         number *= index    
