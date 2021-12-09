@@ -5,9 +5,7 @@ def reverse_string(string):
     return reverse_string
 
 def is_palindrome(string):        
-    if string == reverse_string(string):
-        return True        
-    return False
+    return string == reverse_string(string)
 
 user_input = input("Enter a word: ")
 
