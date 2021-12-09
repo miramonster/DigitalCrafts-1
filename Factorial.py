@@ -1,4 +1,6 @@
 def factorial (number):
+    if number <= 0:
+        return 0        
     for index in range(2, number):
         number *= index    
     return number
