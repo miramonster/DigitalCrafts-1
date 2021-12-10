@@ -2,33 +2,28 @@ def display_menu():
     print("Press 1 to add task")
     print("Press 2 to delete task")
     print("Press 3 to view all tasks")
-    print("Press q to quit")
-    print("")
+    print("Press q to quit\n")
 
 def add_task():
     title = input("Enter a title: ")
     priority = input("Enter the priority: ")
-    task_dictionary["tasks"].append({"title" : title, "priority" : priority})    
-    print("")
-    print("task added")
-    print("")
+    tasks.append({"title" : title, "priority" : priority})    
+    print("\ntask added\n")
 
-def delete_task():
+def delete_task():    
     view_tasks()
     delete = int(input("Enter number of the task to delete: "))
-    del task_dictionary["tasks"][delete - 1]
-    print("")
-    print(f"task #{delete} deleted")
-    print("")
+    del tasks[delete - 1]
+    print(f"\ntask #{delete} deleted\n")
 
-def view_tasks():    
+def view_tasks():
     counter = 1
-    for task in task_dictionary["tasks"]:        
+    for task in tasks:        
         print(f"{counter} - {task['title']} - {task['priority']} ")
         counter += 1
     print("")
 
-task_dictionary = {"tasks" : []}
+tasks = []
 
 print("")
 
@@ -46,3 +41,5 @@ while True:
         view_tasks()
     elif(choice == 'q'):
         break
+    else:
+        print("Invalid Choice\n")
