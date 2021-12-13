@@ -1,3 +1,6 @@
+
+shopping_lists = []
+
 class ShoppingList:
     def __init__(self, title, Address):
         self.title = title
@@ -24,12 +27,6 @@ def display_menu():
     print("4. Quit")
     return int(input("\nPlease select an option: "))
 
-def is_shopping_lists():
-    if(len(shopping_lists) == 0):
-        print("\nno shopping lists")
-        return False
-    return True
-
 def create_new_shopping_list():
     title = input("\nEnter the title for the shopping list: ")
     street = input(f"Enter the street address for {title}: ")
@@ -40,7 +37,8 @@ def create_new_shopping_list():
     print(f"\nShopping List {title} created successfully")
 
 def display_shopping_lists():
-    if(is_shopping_lists() == False):
+    if(len(shopping_lists) == 0):
+        print("\nno shopping lists")
         return
 
     print("\nSHOPPING LISTS")
@@ -56,7 +54,8 @@ def display_shopping_lists():
                 print(f"    {index + 1}. {grocery_item.title}(price:${grocery_item.price} quantity:{grocery_item.quantity})")
         
 def add_grocery_item_to_shopping_list():
-    if(is_shopping_lists() == False):
+    if(len(shopping_lists) == 0):
+        print("\nno shopping lists")
         return
 
     display_shopping_lists()
@@ -78,8 +77,6 @@ def add_grocery_item_to_shopping_list():
     shopping_list.grocery_items.append(GroceryItem(title, price, quantity))
     
     print(f"\ngrocery item {title}(${price}, quantity:{quantity}) successfully added to shopping list {shopping_list.title}")
-
-shopping_lists = []
 
 while True:
     selection = display_menu()   
