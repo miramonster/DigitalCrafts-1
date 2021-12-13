@@ -30,9 +30,9 @@ def display_menu():
 def create_new_shopping_list():
     title = input("\nEnter the title for the shopping list: ")
     street = input(f"Enter the street address for {title}: ")
-    city = input(f"Enter the city for {title}: ")
-    state = input(f"Enter the state for {title}: ")
-    zip_code = input(f"Enter the zip code for {title}: ")
+    city = input(f"Enter the city for {street}: ")
+    state = input(f"Enter the state for {city}: ")
+    zip_code = input(f"Enter the zip code for {city}: ")
     shopping_lists.append(ShoppingList(title, Address(street, city, state, zip_code)))    
     print(f"\nShopping List {title} created successfully")
 
@@ -51,7 +51,7 @@ def display_shopping_lists():
         else:
             for index in range(len(shopping_list.grocery_items)):
                 grocery_item = shopping_list.grocery_items[index]
-                print(f"    {index + 1}. {grocery_item.title}(price:${grocery_item.price} quantity:{grocery_item.quantity})")
+                print(f"    {index + 1}. {grocery_item.title} (price:${grocery_item.price} quantity:{grocery_item.quantity})")
         
 def add_grocery_item_to_shopping_list():
     if(len(shopping_lists) == 0):
@@ -76,7 +76,7 @@ def add_grocery_item_to_shopping_list():
     
     shopping_list.grocery_items.append(GroceryItem(title, price, quantity))
     
-    print(f"\ngrocery item {title}(${price}, quantity:{quantity}) successfully added to shopping list {shopping_list.title}")
+    print(f"\ngrocery item {title} (${price}, quantity:{quantity}) successfully added to shopping list {shopping_list.title}")
 
 while True:
     selection = display_menu()   
