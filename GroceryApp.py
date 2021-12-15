@@ -9,9 +9,14 @@ def create_new_shopping_list():
     shopping_lists.append(ShoppingList(title, address))        
     print(f"\nShopping List {title} created successfully")
 
-def display_shopping_lists():
-    if(len(shopping_lists) == 0):
+def shopping_lists_to_display():
+    if(len(shopping_lists) <= 0):
         print("\nno shopping lists")
+        return False
+    return True
+
+def display_shopping_lists():
+    if shopping_lists_to_display() == False:
         return
 
     print("")
@@ -24,8 +29,7 @@ def display_shopping_lists():
             print(f"    {index + 1}. {grocery_item.title} - ${grocery_item.price:.2f} qty:{grocery_item.quantity}")
         
 def add_grocery_item_to_shopping_list():
-    if(len(shopping_lists) == 0):
-        print("\nno shopping lists")
+    if shopping_lists_to_display() == False:
         return
 
     display_shopping_lists()
@@ -64,8 +68,7 @@ def add_grocery_item_to_shopping_list():
             break                 
 
 def remove_shopping_list():
-    if(len(shopping_lists) == 0):
-        print("\nno shopping lists")
+    if shopping_lists_to_display() == False:
         return
 
     display_shopping_lists()
@@ -84,8 +87,7 @@ def remove_shopping_list():
                 print("invalid selection")
 
 def remove_grocery_item_from_shopping_list():
-    if(len(shopping_lists) == 0):
-        print("\nno shopping lists")
+    if shopping_lists_to_display() == False:
         return
 
     display_shopping_lists()

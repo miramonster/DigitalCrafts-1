@@ -8,3 +8,8 @@ class ShoppingList:
 
     def add_item(self, item):
         self.grocery_items.append(item)
+
+    def has_items(self):
+        if len(self.grocery_items) > 0:
+            return True
+        return False
