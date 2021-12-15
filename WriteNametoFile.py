@@ -1,4 +1,4 @@
 name = input("What is your name? ")
 
-with open("name.txt", "w") as file:
+with open("guest.txt", "w") as file:
     file.write(name)
