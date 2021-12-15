@@ -16,7 +16,7 @@ for index in range(0,30):
     emails.append(f"{create_email()},\n")
 
     if random.randrange(1,100) <= 10:
-        emails.append(emails[index])
+        emails.append(emails[len(emails) - 1])
 
 with open("emails.txt", "w") as file:
     for email in emails:
