@@ -10,6 +10,7 @@ class PoolTable:
         self.is_occupied = False
         self.end_time = datetime.now()
         self.calculate_time_played()
+        self.total_cost = self.get_total_cost()
 
     def open_table(self):
         self.is_occupied = True
@@ -25,3 +26,14 @@ class PoolTable:
         self.seconds_played = int(seconds)
         self.minutes_played = int(minutes)
         self.hours_played = int(hours)
+
+    def get_total_cost(self):
+        cost_per_hour = 30
+        cost_per_minute = cost_per_hour / 60
+        cost_per_second = cost_per_minute / 60
+
+        total = cost_per_hour * self.hours_played
+        total += cost_per_minute * self.minutes_played
+        total += cost_per_second * self.seconds_played
+
+        return total

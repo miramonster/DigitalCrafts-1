@@ -7,12 +7,12 @@ pool_tables = []
 def table_display():
     print("")
     for pool_table in pool_tables:
-        print(f"{pool_table.table_number}. {pool_table_occupied_string(pool_table)} {pool_table_start_time_string(pool_table)} {time_played_string(pool_table)}")
+        print(f"{pool_table.table_number}. {pool_table_occupied_string(pool_table)} {pool_table_start_time_string(pool_table)} {time_played_string(pool_table)} {pool_table_total_cost_string(pool_table)}")
 
 # convert pool table time played to a display string
 def time_played_string(pool_table):
-    pool_table.calculate_time_played()
     if(pool_table.is_occupied):
+        pool_table.calculate_time_played()
         if pool_table.minutes_played <= 0:
             return f" - {pool_table.seconds_played} second(s) played"
         elif pool_table.hours_played <= 0:
@@ -23,7 +23,7 @@ def time_played_string(pool_table):
 
 # convert pool time datetime to a display string
 def pool_table_start_time_string(pool_table):
-    if(pool_table.is_occupied):
+    if pool_table.is_occupied:
         return f" - start time: {pool_table.start_time.strftime('%I:%M PM')}"
     return ""
 
@@ -32,6 +32,12 @@ def pool_table_occupied_string(pool_table):
     if(pool_table.is_occupied):
         return "Occupied"
     return "Not Occupied"
+
+def pool_table_total_cost_string(pool_table):
+    if pool_table.is_occupied:
+        total_cost = pool_table.get_total_cost()
+        return f" - cost: ${total_cost:.2f}"
+    return ""
 
 # open a pool table
 def open_table():
@@ -76,10 +82,11 @@ def close_table():
 def log_table(pool_table):
     date = datetime.now().strftime("%m-%d-%Y")
     with open(f"{date}.txt", 'a') as file:
-        file.write(f"{pool_table.table_number},\n")
-        file.write(f"{pool_table.start_time},\n")
-        file.write(f"{pool_table.end_time},\n")
-        file.write(f"{pool_table.minutes_played},\n")
+        file.write(f"pool table number: {pool_table.table_number},\n")
+        file.write(f"starting time: {pool_table.start_time},\n")
+        file.write(f"ending time: {pool_table.end_time},\n")
+        file.write(f"total time played: {pool_table.hours_played} hours played, {pool_table.minutes_played} minutes played, {pool_table.seconds_played} seconds played\n")
+        file.write(f"total cost: ${pool_table.total_cost:.2f},\n")
 
 # create 12 pool tables
 for index in range(0, 12):
