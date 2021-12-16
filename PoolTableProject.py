@@ -10,7 +10,28 @@ def create_twelve_tables():
 def table_display():
     print("")
     for pool_table in pool_tables:
-        print(f"{pool_table.table_number} - {pool_table.occupied_status()} {pool_table.start_time_string()} {pool_table.minutes_played_string()}")
+        print(f"{pool_table.table_number} - {pool_table_occupied_string(pool_table)} {pool_table_start_time_string(pool_table)} {time_played_string(pool_table)}")
+
+def time_played_string(pool_table):
+    pool_table.calculate_time_played()
+    if(pool_table.is_occupied):
+        if pool_table.minutes_played <= 0:
+            return f" - {pool_table.seconds_played} second(s) played"
+        elif pool_table.hours_played <= 0:
+            return f" - {pool_table.minutes_played} minute(s) and {pool_table.seconds_played} second(s) played"
+        else:
+            return f" - {pool_table.hours_played} hour(s) and {pool_table.minutes_played} minute(s) and {pool_table.seconds_played} second(s) played"
+    return ""
+
+def pool_table_start_time_string(pool_table):
+    if(pool_table.is_occupied):
+        return f" - start time: {pool_table.start_time.strftime('%I:%M PM')}"
+    return ""
+
+def pool_table_occupied_string(self):
+    if(self.is_occupied):
+        return "Occupied"
+    return "Not Occupied"
 
 def open_table():
     table_display()
