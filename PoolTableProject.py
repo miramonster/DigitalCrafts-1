@@ -1,7 +1,9 @@
 from PoolTable import PoolTable
 from datetime import datetime
+import json
 
 pool_tables = []
+log_dump = []
 
 # display all pool tables and occupied, start time and time played for any tables in use
 def table_display():
@@ -54,6 +56,7 @@ def open_table():
                 print(f"\npool table number {pool_table.table_number} is currently occupied")
             else:
                 pool_table.open_table()
+                log_table_in(pool_table)
                 print(f"\npool table number {pool_table.table_number} is now open")
         else:
             print("\nvalid table numbers only")
@@ -73,20 +76,34 @@ def close_table():
                 print(f"\npool table number {pool_table.table_number} is not currently occupied")
             else:
                 pool_table.close_table()
-                log_table(pool_table)
+                log_table_out(pool_table)
                 print(f"\npool table number {pool_table.table_number} is now closed")
         else:
             print("\nvalid table numbers only")
 
-# log pool table info to a file
-def log_table(pool_table):
+# log opened pool table info to a file
+def log_table_in(pool_table):
+    log_dump.append({"table number: " : pool_table.table_number})
+    log_dump.append({"table status: " : "table opened"})
+    log_dump.append({"start time: " : pool_table.start_time.strftime('%m-%d-%Y %I:%M %p')})
+    write_to_log()
+
+
+# log closed pool table info to a file
+def log_table_out(pool_table):
+    log_dump.append({"table number: " : pool_table.table_number})
+    log_dump.append({"table status: " : "table closed"})
+    log_dump.append({"start time: " : pool_table.start_time.strftime('%m-%d-%Y %I:%M %p')})
+    log_dump.append({"end time: " : pool_table.end_time.strftime('%m-%d-%Y %I:%M %p')})
+    log_dump.append({"total time: " : f"{pool_table.hours_played} hours, {pool_table.minutes_played} minutes, {pool_table.seconds_played} seconds "})
+    log_dump.append({"total cost: $" : f"{pool_table.get_total_cost():.2f}"})
+    write_to_log()
+
+def write_to_log():
     date = datetime.now().strftime("%m-%d-%Y")
-    with open(f"{date}.txt", 'a') as file:
-        file.write(f"pool table number: {pool_table.table_number},\n")
-        file.write(f"starting time: {pool_table.start_time},\n")
-        file.write(f"ending time: {pool_table.end_time},\n")
-        file.write(f"total time played: {pool_table.hours_played} hours played, {pool_table.minutes_played} minutes played, {pool_table.seconds_played} seconds played\n")
-        file.write(f"total cost: ${pool_table.total_cost:.2f},\n")
+    with open(f"{date}.json", 'w') as file:
+        json.dump(log_dump, file)
+
 
 # create 12 pool tables
 for index in range(0, 12):
