@@ -3,10 +3,8 @@ import json
 names = []
 
 while True:
-    name = input("What is your name? ")
+    name = input("What is your name (q to quit)? ")
 
-    if len(name) <= 0:
-        print("name can't be blank")
     if (name == 'q'):
         break
     
