@@ -3,15 +3,13 @@ from datetime import datetime
 
 pool_tables = []
 
-def create_twelve_tables():
-    for index in range(0, 12):
-        pool_tables.append(PoolTable(index + 1))
-
+# display all pool tables and occupied, start time and time played for any tables in use
 def table_display():
     print("")
     for pool_table in pool_tables:
-        print(f"{pool_table.table_number} - {pool_table_occupied_string(pool_table)} {pool_table_start_time_string(pool_table)} {time_played_string(pool_table)}")
+        print(f"{pool_table.table_number}. {pool_table_occupied_string(pool_table)} {pool_table_start_time_string(pool_table)} {time_played_string(pool_table)}")
 
+# convert pool table time played to a display string
 def time_played_string(pool_table):
     pool_table.calculate_time_played()
     if(pool_table.is_occupied):
@@ -23,16 +21,19 @@ def time_played_string(pool_table):
             return f" - {pool_table.hours_played} hour(s) and {pool_table.minutes_played} minute(s) and {pool_table.seconds_played} second(s) played"
     return ""
 
+# convert pool time datetime to a display string
 def pool_table_start_time_string(pool_table):
     if(pool_table.is_occupied):
         return f" - start time: {pool_table.start_time.strftime('%I:%M PM')}"
     return ""
 
-def pool_table_occupied_string(self):
-    if(self.is_occupied):
+# convert is_occupied status to a display string
+def pool_table_occupied_string(pool_table):
+    if(pool_table.is_occupied):
         return "Occupied"
     return "Not Occupied"
 
+# open a pool table
 def open_table():
     table_display()
     
@@ -51,6 +52,7 @@ def open_table():
         else:
             print("\nvalid table numbers only")
 
+# close a pool table
 def close_table():
     table_display()
 
@@ -70,6 +72,7 @@ def close_table():
         else:
             print("\nvalid table numbers only")
 
+# log pool table info to a file
 def log_table(pool_table):
     date = datetime.now().strftime("%m-%d-%Y")
     with open(f"{date}.txt", 'a') as file:
@@ -78,9 +81,11 @@ def log_table(pool_table):
         file.write(f"{pool_table.end_time},\n")
         file.write(f"{pool_table.minutes_played},\n")
 
+# create 12 pool tables
+for index in range(0, 12):
+    pool_tables.append(PoolTable(index + 1))
 
-create_twelve_tables()
-
+# main menu
 while True:
     print("\n1. Table Display")
     print("2. Open Table")
