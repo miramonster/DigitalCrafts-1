@@ -4,9 +4,6 @@ class PoolTable:
     def __init__(self, table_number):
         self.is_occupied = False 
         self.start_time = datetime.now()
-        #self.seconds_played = 0
-        #self.minutes_played = 0
-        #self.hours_played = 0
         self.table_number = table_number
 
     def close_table(self):
