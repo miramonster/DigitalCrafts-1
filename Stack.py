@@ -9,7 +9,8 @@ class Stack:
         try:
             item = self.stack[-1]
         except IndexError:
-            print("no more items in the stack\n")
+            print("no more items in the stack")
+            return ""
         else:
             self.stack.remove(item)
             return item
