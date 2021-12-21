@@ -9,10 +9,10 @@ log_dump = []
 def table_display():
     print("")
     for pool_table in pool_tables:
-        print(f"{pool_table.table_number}. {pool_table_occupied_string(pool_table)} {pool_table_start_time_string(pool_table)} {time_played_string(pool_table)} {pool_table_total_cost_string(pool_table)}")
+        print(f"{pool_table.table_number}. {pool_table_occupied_string(pool_table)} {pool_table_start_time_string(pool_table)} {pool_table_time_played_string(pool_table)} {pool_table_total_cost_string(pool_table)}")
 
 # convert pool table time played to a display string
-def time_played_string(pool_table):
+def pool_table_time_played_string(pool_table):
     if(pool_table.is_occupied):
         pool_table.calculate_time_played()
         if pool_table.minutes_played <= 0:

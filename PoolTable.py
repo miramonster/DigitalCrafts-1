@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime
 
 class PoolTable:
     def __init__(self, table_number):
