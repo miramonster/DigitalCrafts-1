@@ -4,7 +4,7 @@ const starterDishesButton = document.getElementById("starterDishesButton");
 const entreeDishesButton = document.getElementById("entreeDishesButton");
 const dessertDishesButton = document.getElementById("dessertDishesButton");
 
-function CreateDishesListItems(dishes) {
+function MapDishesListItems(dishes) {
   dishesUL.innerHTML = dishes.map(function(dish) {
       return `<li>
         <h3>${dish.title}</h3>
@@ -16,19 +16,19 @@ function CreateDishesListItems(dishes) {
 };
 
 allDishesButton.addEventListener("click", function () {
-  CreateDishesListItems(dishes);
+  MapDishesListItems(dishes);
 });
 
 starterDishesButton.addEventListener("click", function() {
-    CreateDishesListItems(dishes.filter(dish => dish.course == "Starters"))
+    MapDishesListItems(dishes.filter(dish => dish.course == "Starters"))
 });
 
 entreeDishesButton.addEventListener("click", function () {
-    CreateDishesListItems(dishes.filter(dish => dish.course == "Entrees"))
+    MapDishesListItems(dishes.filter(dish => dish.course == "Entrees"))
 });
 
 dessertDishesButton.addEventListener("click", function () {
-    CreateDishesListItems(dishes.filter(dish => dish.course == "Desserts"))
+    MapDishesListItems(dishes.filter(dish => dish.course == "Desserts"))
 });
 
-CreateDishesListItems(dishes);
+MapDishesListItems(dishes);
