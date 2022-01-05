@@ -15,20 +15,12 @@ function MapDishesToListItems(dishes) {
   })
 };
 
-allDishesButton.addEventListener("click", function () {
-    MapDishesToListItems(dishes);
-});
+allDishesButton.addEventListener("click", () => MapDishesToListItems(dishes));
 
-starterDishesButton.addEventListener("click", function() { 
-    MapDishesToListItems(dishes.filter(dish => dish.course == "Starters"))
-});
+starterDishesButton.addEventListener("click", () => MapDishesToListItems(dishes.filter(dish => dish.course == "Starters")));
 
-entreeDishesButton.addEventListener("click", function () {
-    MapDishesToListItems(dishes.filter(dish => dish.course == "Entrees"))
-});
+entreeDishesButton.addEventListener("click", () => MapDishesToListItems(dishes.filter(dish => dish.course == "Entrees")));
 
-dessertDishesButton.addEventListener("click", function () {
-    MapDishesToListItems(dishes.filter(dish => dish.course == "Desserts"))
-});
+dessertDishesButton.addEventListener("click", () => MapDishesToListItems(dishes.filter(dish => dish.course == "Desserts")));
 
 MapDishesToListItems(dishes);
