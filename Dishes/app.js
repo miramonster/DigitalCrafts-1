@@ -4,8 +4,8 @@ const starterDishesButton = document.getElementById("starterDishesButton");
 const entreeDishesButton = document.getElementById("entreeDishesButton");
 const dessertDishesButton = document.getElementById("dessertDishesButton");
 
-function CreateDishListItems(dishes) {
-  let dishItems = dishes.map(function(dish) {
+function CreateDishesListItems(dishes) {
+  dishesUL.innerHTML = dishes.map(function(dish) {
       return `<li>
         <h3>${dish.title}</h3>
         <h4>${dish.price}</h4>
@@ -13,42 +13,22 @@ function CreateDishListItems(dishes) {
         <img src=${dish.imageURL} class='dish_image'></img>
         </li>`
   })
-
-  dishesUL.innerHTML = dishItems;
-}
+};
 
 allDishesButton.addEventListener("click", function () {
-  CreateDishListItems(dishes);
+  CreateDishesListItems(dishes);
 });
 
-starterDishesButton.addEventListener("click", function () {
-  CreateDishListItems(
-    dishes.filter(function (dish) {
-      if (dish.course == "Starters") {
-        return dish;
-      }
-    })
-  );
+starterDishesButton.addEventListener("click", function() {
+    CreateDishesListItems(dishes.filter(dish => dish.course == "Starters"))
 });
 
 entreeDishesButton.addEventListener("click", function () {
-  CreateDishListItems(
-    dishes.filter(function (dish) {
-      if (dish.course == "Entrees") {
-        return dish;
-      }
-    })
-  );
+    CreateDishesListItems(dishes.filter(dish => dish.course == "Entrees"))
 });
 
 dessertDishesButton.addEventListener("click", function () {
-  CreateDishListItems(
-    dishes.filter(function (dish) {
-      if (dish.course == "Desserts") {
-        return dish;
-      }
-    })
-  );
+    CreateDishesListItems(dishes.filter(dish => dish.course == "Desserts"))
 });
 
-CreateDishListItems(dishes);
+CreateDishesListItems(dishes);
