@@ -10,7 +10,7 @@ showQuotesButton.addEventListener("click", function() {
     stock = getStockQuote(symbol);
     
     // set initial stock display info
-    showQuotesDiv.innerHTML = `<h2>${stock.name}</h2> <h3>${stock.price}</h3>`
+    showQuotesDiv.innerHTML = `<div><h2>${stock.name}</h2> <h3>${stock.price}</h3></div>`
 
     // start 2 second timer to update price
     window.setInterval(function () {
