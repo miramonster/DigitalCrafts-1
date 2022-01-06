@@ -16,17 +16,19 @@ function DisplayNewsArticles(articles){
 }
 
 function BuildSourcesDropDownList() {
-    sourcesDropDown.innerHTML = sources.sources.map(function(source){
-        if (news.articles.filter(article => article.source.id == source.id).length > 0) 
-            return `<option>${source.id}</option>`})
+    return sources.sources.map(function(source){
+        if (news.articles.filter(article => article.source.name == source.name).length > 0) 
+            return `<option>${source.name}</option>`})
 
-    /*  same as above but more spread out
-        return sources.sources.map(function(source) {
+    /* same as above but more spread out
+    let filteredSources = sources.sources.map(function(source) {
         let filteredArticles = news.articles.filter(article => article.source.name == source.name)
 
         if (filteredArticles.length > 0)
-            return `<option>${source.name}</option>` 
-    }) */
+            return `<option>${source.name}</option>`             
+        }) 
+
+    return filteredSources; */    
 }
 
 sourcesDropDown.innerHTML = BuildSourcesDropDownList()
