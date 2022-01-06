@@ -6,8 +6,7 @@
 .news_feed {
     width: 300px;
     text-align:center;
-    padding-bottom: 10px;
-    border: 10px solid green;
+    border: 10px solid rgb(0, 51, 128);
 }
 
 html {
