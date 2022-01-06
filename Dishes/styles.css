@@ -1,12 +1,12 @@
 .dish_image {
     width: 250px;
     height: 200px;
-  }
+}
 
-  .dish_description {
+ .dish_description {
       width: 250px
-  }
+}
 
-  .dishesList {
+ #dishesList {
     list-style-type: none;
-  }
+}

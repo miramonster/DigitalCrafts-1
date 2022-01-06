@@ -11,11 +11,9 @@ const dessertDishesButton = document.getElementById("dessertDishesButton");
 function MapDishesToListItems(dishes) {
     dishesUL.innerHTML = dishes.map(function(dish) {
       return `<li>
-        <div>        
             <img src=${dish.imageURL} class='dish_image'></img>
             <h3>${dish.title} - $${dish.price}</h4>
             <h5 class='dish_description'>${dish.description}</h5>
-        </div>        
         </li>`
   }).join('')
 };
