@@ -17,7 +17,7 @@ function MapDishesToListItems(dishes) {
             <h5 class='dish_description'>${dish.description}</h5>
         </div>        
         </li>`
-  })
+  }).join('')
 };
 
 // add click events to the four buttons to filter the dishes to the desired course
