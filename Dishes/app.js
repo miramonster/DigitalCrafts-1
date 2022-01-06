@@ -1,4 +1,4 @@
-const dishesUL = document.getElementById("dishesList");
+const dishesUL = document.getElementById("dishes_ul");
 const allDishesButton = document.getElementById("allDishesButton");
 const starterDishesButton = document.getElementById("starterDishesButton");
 const entreeDishesButton = document.getElementById("entreeDishesButton");
