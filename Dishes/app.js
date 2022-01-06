@@ -10,7 +10,7 @@ function MapDishesToListItems(dishes) {
       <img src=${dish.imageURL} class='dish_image'></img>
       <h3>${dish.title} - $${dish.price}</h4>
       <h5 class='dish_description'>${dish.description}</h5>
-    </li>`).join('') 
+    </li>`).join('')
 };
 
 allDishesButton.addEventListener("click", () => MapDishesToListItems(dishes));
