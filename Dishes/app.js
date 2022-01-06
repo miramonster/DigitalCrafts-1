@@ -11,7 +11,7 @@ function MapDishesToListItems(dishes) {
             <h3>${dish.title} - $${dish.price}</h4>
             <h5 class='dish_description'>${dish.description}</h5>
         </li>`
-  }).join('')
+  }).join('') 
 };
 
 allDishesButton.addEventListener("click", () => MapDishesToListItems(dishes));
