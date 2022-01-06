@@ -42,7 +42,7 @@ let dishes =  [
     {
       "description" : "Elegantly crafted creamy vanilla custard with a caramelized crunchy layer on top. Served with seasonal fruit.",
       "imageURL" : "https://www.yogurt-land.com/assets/584.png",
-      "title" : "CrÃ¨me BrÃ»lÃ©e",
+      "title" : "Creme Brulee",
       "course" : "Desserts",
       "id" : 13,
       "price" : 9

@@ -2,3 +2,11 @@
     width: 250px;
     height: 200px;
   }
+
+  .dish_description {
+      width: 250px
+  }
+
+  .dishesList {
+    list-style-type: none;
+  }

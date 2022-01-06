@@ -1,7 +1,7 @@
 // unordered list for holding dishes list items
 const dishesUL = document.getElementById("dishesList");
 
-// 4 buttons for filtering dishes
+// four buttons for filtering dishes
 const allDishesButton = document.getElementById("allDishesButton");
 const starterDishesButton = document.getElementById("starterDishesButton");
 const entreeDishesButton = document.getElementById("entreeDishesButton");
@@ -11,15 +11,16 @@ const dessertDishesButton = document.getElementById("dessertDishesButton");
 function MapDishesToListItems(dishes) {
     dishesUL.innerHTML = dishes.map(function(dish) {
       return `<li>
-        <h3>${dish.title}</h3>
-        <h4>${dish.price}</h4>
-        <h5>${dish.description}</h4>
-        <img src=${dish.imageURL} class='dish_image'></img>
+        <div>        
+            <img src=${dish.imageURL} class='dish_image'></img>
+            <h3>${dish.title} - $${dish.price}</h4>
+            <h5 class='dish_description'>${dish.description}</h5>
+        </div>        
         </li>`
   })
 };
 
-// 4 click events to filter the dishes to the desired option and display them
+// add click events to the four buttons to filter the dishes to the desired course
 allDishesButton.addEventListener("click", () => MapDishesToListItems(dishes));
 
 starterDishesButton.addEventListener("click", () => MapDishesToListItems(dishes.filter(dish => dish.course == "Starters")));
