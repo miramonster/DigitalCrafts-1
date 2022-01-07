@@ -17,4 +17,4 @@ function fetchStockQuote(symbol, stockQuoteFetched){
     }, 2000)
 }
 
-showQuotesButton.addEventListener("click", () => fetchStockQuote(symbolTextBox.value, (quote) => displayStockQuote(quote)));
+showQuotesButton.addEventListener("click", () => fetchStockQuote(symbolTextBox.value, quote => displayStockQuote(quote)));
