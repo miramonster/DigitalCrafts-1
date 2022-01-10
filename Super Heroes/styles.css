@@ -1,0 +1,10 @@
+.search{
+    display:inline-block;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.poster{    
+    width: 225;
+    height: 300px;
+}
