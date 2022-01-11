@@ -1,4 +1,4 @@
-const superHeroDiv = document.getElementById("superHeroDiv")
+const movieDiv = document.getElementById("movieDiv")
 const searchButton = document.getElementById("searchButton")
 const searchTextBox = document.getElementById("searchTextBox")
 const apikey = '252c9978'
@@ -10,7 +10,7 @@ function getSearchResults(){
     let request = new XMLHttpRequest()
     request.open('GET', `http://www.omdbapi.com/?s=${superHero}&apikey=${apikey}`)
     request.send()    
-    request.onload = () => DisplaySearchResults(request.responseText)    
+    request.onload = () => displaySearchResults(request.responseText)    
 }
 
 function displaySearchResults(results){
@@ -19,17 +19,17 @@ function displaySearchResults(results){
         `<div class="search">
         <img src=${result.Poster} class="poster"/>
         <h5>${result.Title} (${result.Year})</h5>
-        <button id="moreInfoButton" onclick="GetImdbInfo('${result.imdbID}')">More Info</button>
+        <button id="moreInfoButton" onclick="getImdbInfo('${result.imdbID}')">More Info</button>
         <div id="${result.imdbID}InfoDiv"></div>
         </div>`).join('')
-    superHeroDiv.innerHTML = html
+    movieDiv.innerHTML = html
 }
 
 function getImdbInfo(id) {
     let request = new XMLHttpRequest()
     request.open('GET', `http://www.omdbapi.com/?i=${id}&apikey=${apikey}`)
     request.send()
-    request.onload = () => DisplayImdbInfo(request.responseText)    
+    request.onload = () => displayImdbInfo(request.responseText)    
 }
 
 function displayImdbInfo(results){
