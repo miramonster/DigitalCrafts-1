@@ -11,44 +11,22 @@ addOrderButton.onclick = () => addOrder()
 showAllButton.onclick = () => getAllOrders()
 findOrderButton.onclick = () => getOrderByEmail(findOrderTextBox.value)
 
+// api url
+let url = 'https://troubled-peaceful-hell.glitch.me/orders'
+
 // returns all the orders
 function getAllOrders() {
     let request = new XMLHttpRequest()
     request.onload = () => displayAllOrders(request.responseText)
-    request.open('GET', 'https://troubled-peaceful-hell.glitch.me/orders')
+    request.open('GET', url)
     request.send();
-}
-
-// return an order using an email
-function getOrderByEmail(email) {
-    if (!findOrderTextBox.checkValidity())
-        return
-    findOrderTextBox.value = ""
-    let request = new XMLHttpRequest()
-    request.onload = () => displaySingleOrder(request.responseText)
-    request.open('GET', `https://troubled-peaceful-hell.glitch.me/orders/${email}`)
-    request.send();
-}
-
-// displays a single order
-function displaySingleOrder(result) {
-    let order = JSON.parse(result)
-    let html =
-        `<ul>
-            <li>${order.email}</li>
-            <li>${order.type}</li>
-            <li>${order.size}</li>
-            <li>$${order.price}</li>
-            <button id="deleteButton" onclick="deleteOrder('${order.email}')">Delete Order</button>
-        </ul>`
-    let div = document.getElementById("viewOrders")
-    div.innerHTML = html
 }
 
 // displays all the orders
 function displayAllOrders(result) {
     let orders = JSON.parse(result)
-    let html = orders.map((order) =>
+    let viewOrdersDiv = document.getElementById("viewOrders")
+    viewOrdersDiv.innerHTML = orders.map((order) =>
         `<ul style="list-style-type: none;">
             <li>${order.email}</li>
             <li>${order.type}</li>
@@ -56,26 +34,48 @@ function displayAllOrders(result) {
             <li>$${order.price}</li>
             <button id="deleteButton" onclick="deleteOrder('${order.email}')">Delete Order</button>
         </ul>`).join('')
-    let div = document.getElementById("viewOrders")
-    div.innerHTML = html
+}
+
+// return a single order using an email
+function getOrderByEmail(email) {
+    if (!findOrderTextBox.checkValidity()) return
+    findOrderTextBox.value = ""
+    let request = new XMLHttpRequest()
+    request.onload = () => displaySingleOrder(request.responseText)
+    request.open('GET', `${url}/${email}`)
+    request.send();
+}
+
+// displays a single order
+function displaySingleOrder(result) {
+    let order = JSON.parse(result)
+    let viewOrdersDiv = document.getElementById("viewOrders")
+    viewOrdersDiv.innerHTML =
+        `<ul style="list-style-type: none;">
+            <li>${order.email}</li>
+            <li>${order.type}</li>
+            <li>${order.size}</li>
+            <li>$${order.price}</li>            
+            <button id="deleteButton" onclick="deleteOrder('${order.email}')">Delete Order</button>
+        </ul>`
 }
 
 // deletes an order using an email
 function deleteOrder(email) {
     let request = new XMLHttpRequest()
     request.onload = () => getAllOrders()
-    request.open('DELETE', `https://troubled-peaceful-hell.glitch.me/orders/${email}`)
+    request.open('DELETE', `${url}/${email}`)
     request.send()
 }
 
 // adds an order
 function addOrder() {    
-    if (!document.getElementById("emailTextBox").checkValidity()) 
+    if (!document.getElementById("addOrderEmailTextBox").checkValidity()) 
         return
 
     let request = new XMLHttpRequest()
     request.onload = () => getAllOrders()
-    request.open('POST', 'https://troubled-peaceful-hell.glitch.me/orders')
+    request.open('POST', `${url}`)
     request.setRequestHeader('Content-Type', 'application/json')
     const [coffeeType, price, size, email] = getNewOrderInfo()
     const body = {
