@@ -47,8 +47,7 @@ function DisplayImdbInfo(result){
         `<h5>Metascore: ${result.Metascore}</h5>
         <h5>imdb Rating: ${result.imdbRating}</h5>
         <h5>MPAA Rating: ${result.Rated}</h5>
-        <h5>Runtime: ${result.Runtime}</h5>
-        `
+        <h5>Runtime: ${result.Runtime}</h5>`
  
     document.getElementById(`${result.imdbID}InfoDiv`).innerHTML = info    
 }
