@@ -21,26 +21,24 @@ function GetSearchResults(){
 function DisplaySearchResults(results){
     let images = results.map(result => 
         `<div class="search">
-        <img src=${result.Poster} class="poster"></img>
+        <img src=${result.Poster} class="poster"/>
         <h5>${result.Title} (${result.Year})</h5>
         <button id="moreInfoButton" onclick="GetImdbInfo('${result.imdbID}')">More Info</button>
-        <div id="${result.Title}InfoDiv"></div>
+        <div id="${result.imdbID}InfoDiv"></div>
         </div>`).join('')
 
     superHeroDiv.innerHTML = images
 }
 
 function DisplayImdbInfo(result){    
-    let results = []
-    results.push(result)
-    let info = results.map(result =>
+    let info = 
         `<h5>Metascore: ${result.Metascore}</h5>
         <h5>imdb Rating: ${result.imdbRating}</h5>
         <h5>MPAA Rating: ${result.Rated}</h5>
         <h5>Runtime: ${result.Runtime}</h5>
-        `).join('')
+        `
  
-    let div = document.getElementById(`${result.Title}InfoDiv`) 
+    let div = document.getElementById(`${result.imdbID}InfoDiv`) 
     div.innerHTML = info    
 }
 
@@ -48,6 +46,7 @@ function GetImdbInfo(id){
     let request = new XMLHttpRequest()
     request.onload = function() {
         let result = JSON.parse(this.responseText)
+        console.log(result);
         DisplayImdbInfo(result)
     }
 
