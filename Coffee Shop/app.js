@@ -1,20 +1,21 @@
-function getOrders(email) {
+// gets all orders
+function getAllOrders() {
     let request = new XMLHttpRequest()
-    let url = 'https://troubled-peaceful-hell.glitch.me/orders'
-
-    if (email !== undefined) {
-        url += `/${email}`
-        findOrderTextBox.value = ""
-        request.onload = () => displaySingleOrder(request.responseText)
-    }
-    else {
-        request.onload = () => displayAllOrders(request.responseText)
-    }
-
-    request.open('GET', url)
+    request.onload = () => displayAllOrders(request.responseText)
+    request.open('GET', 'https://troubled-peaceful-hell.glitch.me/orders')
     request.send();
 }
 
+// gets order by email
+function getOrderByEmail(email) {
+    // TODO: validity check on email for order search
+    findOrderTextBox.value = ""
+    request.onload = () => displaySingleOrder(request.responseText)
+    request.open('GET', 'https://troubled-peaceful-hell.glitch.me/orders/${email}')
+    request.send();
+}
+
+// displays a single order
 function displaySingleOrder(result) {
     let order = JSON.parse(result)
     let html =
@@ -29,6 +30,7 @@ function displaySingleOrder(result) {
     div.innerHTML = html
 }
 
+// displays all orders
 function displayAllOrders(result) {
     let orders = JSON.parse(result)
     let html = orders.map((order) =>
@@ -43,16 +45,18 @@ function displayAllOrders(result) {
     div.innerHTML = html
 }
 
+// deletes an order
 function deleteOrder(email) {
     let request = new XMLHttpRequest()
-    request.onload = () => getOrders()
+    request.onload = () => getAllOrders()
     request.open('DELETE', `https://troubled-peaceful-hell.glitch.me/orders/${email}`)
     request.send()
 }
 
+// adds an order
 function addOrder() {
     let request = new XMLHttpRequest()
-    request.onload = () => getOrders()
+    request.onload = () => getAllOrders()
     request.open('POST', 'https://troubled-peaceful-hell.glitch.me/orders')
     request.setRequestHeader('Content-Type', 'application/json')
     const [coffeeType, price, size, email] = getNewOrderInfo()
@@ -65,6 +69,7 @@ function addOrder() {
     request.send(JSON.stringify(body))
 }
 
+// gets new order info from form
 function getNewOrderInfo() {
     let type = ""
     let price = 1;
@@ -102,6 +107,7 @@ function getNewOrderInfo() {
     return [type, parseFloat(price), size, email]
 }
 
+// html elements
 let addOrderButton = document.getElementById("addOrderButton")
 let showAllButton = document.getElementById("showAllOrdersButton")
 let findOrderButton = document.getElementById("findOrderButton")
@@ -109,6 +115,7 @@ let selectedCoffee = document.getElementById("coffeeSelect")
 let findOrderTextBox = document.getElementById("findOrderByEmailTextBox")
 let selectedSizes = document.querySelectorAll("input[name='size']")
 
+// event handlers
 addOrderButton.onclick = () => addOrder()
-showAllButton.onclick = () => getOrders()
-findOrderButton.onclick = () => getOrders(findOrderTextBox.value)
+showAllButton.onclick = () => getAllOrders()
+findOrderButton.onclick = () => getAllOrders(findOrderTextBox.value)
