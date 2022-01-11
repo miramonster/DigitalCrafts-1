@@ -32,13 +32,14 @@ function DisplaySearchResults(results){
 
 function GetImdbInfo(id) {
     let request = new XMLHttpRequest()
+
+    request.open('GET', `http://www.omdbapi.com/?i=${id}&apikey=${apikey}`)
+    request.send()
+
     request.onload = function () {
         let result = JSON.parse(this.responseText)
         DisplayImdbInfo(result)
     }
-
-    request.open('GET', `http://www.omdbapi.com/?i=${id}&apikey=${apikey}`)
-    request.send()
 }
 
 function DisplayImdbInfo(result){    
