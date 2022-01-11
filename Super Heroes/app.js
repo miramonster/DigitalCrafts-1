@@ -38,8 +38,7 @@ function DisplayImdbInfo(result){
         <h5>Runtime: ${result.Runtime}</h5>
         `
  
-    let div = document.getElementById(`${result.imdbID}InfoDiv`) 
-    div.innerHTML = info    
+    document.getElementById(`${result.imdbID}InfoDiv`).innerHTML = info    
 }
 
 function GetImdbInfo(id){    
