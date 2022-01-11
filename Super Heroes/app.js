@@ -30,6 +30,17 @@ function DisplaySearchResults(results){
     superHeroDiv.innerHTML = images
 }
 
+function GetImdbInfo(id) {
+    let request = new XMLHttpRequest()
+    request.onload = function () {
+        let result = JSON.parse(this.responseText)
+        DisplayImdbInfo(result)
+    }
+
+    request.open('GET', `http://www.omdbapi.com/?i=${id}&apikey=${apikey}`)
+    request.send()
+}
+
 function DisplayImdbInfo(result){    
     let info = 
         `<h5>Metascore: ${result.Metascore}</h5>
@@ -39,16 +50,4 @@ function DisplayImdbInfo(result){
         `
  
     document.getElementById(`${result.imdbID}InfoDiv`).innerHTML = info    
-}
-
-function GetImdbInfo(id){    
-    let request = new XMLHttpRequest()
-    request.onload = function() {
-        let result = JSON.parse(this.responseText)
-        console.log(result);
-        DisplayImdbInfo(result)
-    }
-
-    request.open('GET', `http://www.omdbapi.com/?i=${id}&apikey=${apikey}`)
-    request.send()
 }
