@@ -19,7 +19,7 @@ function showStocks(results) {
         </div>`).join('')
     let div = document.getElementById("stockDisplayDiv")
     div.innerHTML = html
-}
+} 
 
 function postStocks() {
 
