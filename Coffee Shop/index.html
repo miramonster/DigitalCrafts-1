@@ -4,10 +4,25 @@
         <link rel="stylesheet" href="styles.css">
     </head>
     <body>
-        <div id="addOrders"></div>
-        <div id="deleteOrders"></div>
-        <div id="searchOrders"></div>
-        <div id="viewOrders" class="orders"></div>
+        <div id="addOrders">
+            <form>
+                <select id="coffeeSelect">
+                    <option>Black - $1.00</option>
+                    <option>Sugar - $1.50</option>
+                    <option>Cream - $1.50</option>
+                    <option>Sugar & Cream - $2.00</option>
+                </select> <br />
+                <input type="radio" name="size" value="Small"/> Small <br />
+                <input type="radio" name="size" value="Medium" checked/> Medium <br />
+                <input type="radio" name="size" value="Large" /> Large <br />
+                <input type="email" id="emailTextBox" placeholder="Email Address (required)" required/> <br />
+                <input type="submit" value="Submit Order" id="addOrderButton" />
+            </form>
+            <button id="showAllOrdersButton">Show All Orders</button><br />
+            <button id="findOrderButton">Find Order</button>
+            <input type="email" id="findOrderByEmailTextBox" placeholder="Email Address" />
+        </div>
+        <div id="viewOrders"></div>
     </body>
 </html>
 <script src="app.js"></script>

@@ -1,11 +1,13 @@
-.orders {
-    list-style-type: none;
-}
-
 ul {
     list-style-type: none;
 }
 
-li {
-    list-style-type: none;
+html {
+    display: table;
+    margin: auto;
+}
+
+body {
+    display: table-cell;
+    vertical-align: middle;
 }
