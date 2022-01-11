@@ -14,6 +14,27 @@ findOrderButton.onclick = () => getOrderByEmail(findOrderTextBox.value)
 // api url
 let url = 'https://troubled-peaceful-hell.glitch.me/orders'
 
+// small class for the coffees
+class CoffeeDrink {
+    constructor(name, smallPrice, mediumPrice, largePrice) {
+        this.name = name
+        this.smallPrice = smallPrice
+        this.mediumPrice = mediumPrice
+        this.largePrice = largePrice
+    }
+}
+
+// create a couple coffees to sell
+let coffees = []
+coffees.push(new CoffeeDrink("Black Coffee", 1, 1.5, 2))
+coffees.push(new CoffeeDrink("Sugar & Cream", 2, 2.5, 3))
+coffees.push(new CoffeeDrink("Mocha", 3, 3.5, 4))
+
+// create out coffee selector elements dynamically from the coffee objects
+for (let coffee of coffees)
+    document.getElementById("coffeeSelect")
+            .innerHTML += `<option>${coffee.name}</option>`
+
 // returns all the orders
 function getAllOrders() {
     let request = new XMLHttpRequest()
@@ -70,12 +91,11 @@ function deleteOrder(email) {
 
 // adds an order
 function addOrder() {    
-    if (!document.getElementById("addOrderEmailTextBox").checkValidity()) 
-        return
+    if (!document.getElementById("addOrderEmailTextBox").checkValidity())  return
 
     let request = new XMLHttpRequest()
     request.onload = () => getAllOrders()
-    request.open('POST', `${url}`)
+    request.open('POST', url)
     request.setRequestHeader('Content-Type', 'application/json')
     const [coffeeType, price, size, email] = getNewOrderInfo()
     const body = {
@@ -85,7 +105,6 @@ function addOrder() {
         price: price,
     }
     request.send(JSON.stringify(body))
-    console.log(JSON.stringify(body))
 }
 
 // gets new order info from the html form
@@ -99,7 +118,7 @@ function getNewOrderInfo() {
     type = document.getElementById("coffeeSelect").value
 
     // email 
-    email = document.getElementById("emailTextBox").value
+    email = document.getElementById("addOrderEmailTextBox").value
 
     // size from radio buttons
     for (const selectedSize of selectedSizes) 
