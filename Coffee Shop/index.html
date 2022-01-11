@@ -1,26 +1,31 @@
 <!DOCTYPE html>
-<html>
+<html style="display: table; margin: auto">
     <head>
         <link rel="stylesheet" href="styles.css">
     </head>
-    <body>
-        <div id="addOrders">
-            <form>
+    <body style="display: table-cell; text-align: center;">
+        <div id="addOrders" style="padding-top: 10px;">
+            New Drink Order Form
+            <form id="addOrderForm">
                 <select id="coffeeSelect">
-                    <option>Black - $1.00</option>
-                    <option>Sugar - $1.50</option>
-                    <option>Cream - $1.50</option>
-                    <option>Sugar & Cream - $2.00</option>
-                </select> <br />
-                <input type="radio" name="size" value="Small"/> Small <br />
-                <input type="radio" name="size" value="Medium" checked/> Medium <br />
-                <input type="radio" name="size" value="Large" /> Large <br />
-                <input type="email" id="emailTextBox" placeholder="Email Address (required)" required/> <br />
-                <input type="submit" value="Submit Order" id="addOrderButton" />
+                    <option>Black</option>
+                    <option>Cream & Sugar</option>
+                    <option>Mocha</option>
+                </select>
+                <input type="radio" name="size" value="Small"/> Small
+                <input type="radio" name="size" value="Medium" checked/> Medium
+                <input type="radio" name="size" value="Large" /> Large <br/>
+                <input type="email" id="emailTextBox" placeholder="Email Address (required)" required/>
+                <button id="addOrderButton" style="margin-top: 5px;">Submit Order</button>
+            </form><br/>
+            <form id="findOrderForm">
+                Find order by email<br/>
+                <input type="email" id="findOrderByEmailTextBox" placeholder="Email Address (required)" required/>
+                <button id="findOrderButton">Find Order</button>
             </form>
-            <button id="showAllOrdersButton">Show All Orders</button><br />
-            <button id="findOrderButton">Find Order</button>
-            <input type="email" id="findOrderByEmailTextBox" placeholder="Email Address" />
+            <div class="show_all_orders_button">
+                <button id="showAllOrdersButton" style="margin-top: 20px;">Show All Orders</button>
+            </div>
         </div>
         <div id="viewOrders"></div>
     </body>
