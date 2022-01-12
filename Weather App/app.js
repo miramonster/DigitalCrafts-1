@@ -1,5 +1,5 @@
-const apiByCityUrl = 'http://api.openweathermap.org/data/2.5/weather?q='
-const apiByLongLatUrl = 'http://api.openweathermap.org/data/2.5/weather?lat='
+const apiByCityUrl = 'http://api.openweathermap.org/data/2.5/weather?'
+const apiByLongLatUrl = 'http://api.openweathermap.org/data/2.5/weather?'
 const apiKey = '4bc94f2afc12e496789ee0829f4ca267'
 
 document.getElementById("checkWeatherButton").onclick = () => getWeatherDataFromCityName()
@@ -10,7 +10,7 @@ getUserLongLat();
 // return the weather data using a city name
 function getWeatherDataFromCityName(){
     let cityTextBox = document.getElementById("cityTextBox")
-    fetch(`${apiByCityUrl}${cityTextBox.value}&appid=${apiKey}&units=imperial`)
+    fetch(`${apiByCityUrl}q=${cityTextBox.value}&appid=${apiKey}&units=imperial`)
     .then(response => response.json())
     .then(result => displayWeatherData(result))
 }
@@ -33,7 +33,7 @@ function formatWeatherData(weatherData){
     </ul>`
 }
 
-// return the long/lat of the user
+// return the longitude and latitude of the user
 function getUserLongLat(){
     if ('geolocation' in navigator)
         navigator.geolocation.getCurrentPosition(position => 
@@ -42,7 +42,7 @@ function getUserLongLat(){
 
 // return the weather data from a longitdue and latitude
 function getWeatherDataFromLongLat(longitude, latitude) {  
-    fetch(`${apiByLongLatUrl}${latitude}&lon=${longitude}&appid=${apiKey}&units=imperial`)
+    fetch(`${apiByLongLatUrl}lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=imperial`)
     .then(response => response.json())
     .then(result => displayWeatherData(result))
 }
