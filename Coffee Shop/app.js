@@ -30,7 +30,7 @@ let hideAllOrdersButton = document.getElementById("hideAllOrdersButton")
 let findOrderFromEmailButton = document.getElementById("findOrderButton")
 let findOrderFromEmailTextBox = document.getElementById("findOrderByEmailTextBox")
 let selectCoffeeList = document.getElementById("coffeeSelect")
-let selectSizeRadios = document.querySelectorAll("input[name='size']")
+let sizeRadios = document.querySelectorAll("input[name='size']")
 
 // event handlers
 addNewOrderButton.onclick = () => addNewOrder()
@@ -118,7 +118,7 @@ function addNewOrder() {
     let request = new XMLHttpRequest()
     request.onload = () => getAllOrders()
     request.open('POST', apiUrl)
-    request.setRequestHeader('Content-Type', 'application/json')
+    request.setRequestHeader('Content-Type', 'application/json')  
     const [coffeeType, coffeePrice, coffeeSize, orderEmail] = getOrderFromForm()
     const body = {
         email: orderEmail,
@@ -135,13 +135,10 @@ function getOrderFromForm() {
     let email = document.getElementById("addOrderEmailTextBox").value
 
     // get the coffee size from the selected radio button
-    let size = ""
-    for (const selectedSizeRadio of selectSizeRadios) 
-        if (selectedSizeRadio.checked)
-            size = selectedSizeRadio.value
+    let sizeRadio = [...sizeRadios].filter(a => a.checked)
+    let size = sizeRadio[0].value    
 
-    //  filter to the correct coffee using the coffee type
-    //  and get the price using the size of the drink
+    //  get the coffee price from the selected type and size
      let coffeeItem = getCoffeeItems().filter(c => c.coffeeType == type)
      let price = coffeeItem[0].getPrice(size)
 
