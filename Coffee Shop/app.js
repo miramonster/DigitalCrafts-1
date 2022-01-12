@@ -1,7 +1,7 @@
 // small coffee item class
-class Coffee {
-    constructor(type, smallPrice, mediumPrice, largePrice) {
-        this.type = type
+class CoffeeItem {
+    constructor(coffeeType, smallPrice, mediumPrice, largePrice) {
+        this.coffeeType = coffeeType
         this.smallPrice = smallPrice
         this.mediumPrice = mediumPrice
         this.largePrice = largePrice
@@ -24,32 +24,32 @@ class Coffee {
 let apiUrl = 'https://troubled-peaceful-hell.glitch.me/orders'
 
 // html elements
-let addOrderButton = document.getElementById("addOrderButton")
-let showAllButton = document.getElementById("showAllOrdersButton")
-let hideAllButton = document.getElementById("hideAllOrdersButton")
-let findOrderButton = document.getElementById("findOrderButton")
-let findOrderTextBox = document.getElementById("findOrderByEmailTextBox")
-let selectedCoffee = document.getElementById("coffeeSelect")
-let selectedSizes = document.querySelectorAll("input[name='size']")
+let addNewOrderButton = document.getElementById("addOrderButton")
+let showAllOrdersButton = document.getElementById("showAllOrdersButton")
+let hideAllOrdersButton = document.getElementById("hideAllOrdersButton")
+let findOrderFromEmailButton = document.getElementById("findOrderButton")
+let findOrderFromEmailTextBox = document.getElementById("findOrderByEmailTextBox")
+let selectCoffeeList = document.getElementById("coffeeSelect")
+let selectSizeRadios = document.querySelectorAll("input[name='size']")
 
 // event handlers
-addOrderButton.onclick = () => addOrder()
-findOrderButton.onclick = () => getOrderByEmail(findOrderTextBox.value)
-showAllButton.onclick = () => getAllOrders()
-hideAllButton.onclick = () => document.getElementById("viewOrdersDiv").innerHTML = ""
+addNewOrderButton.onclick = () => addNewOrder()
+findOrderFromEmailButton.onclick = () => getOrderFromEmail(findOrderFromEmailTextBox.value)
+showAllOrdersButton.onclick = () => getAllOrders()
+hideAllOrdersButton.onclick = () => document.getElementById("viewOrdersDiv").innerHTML = ""
 
 // create the coffee type selector elements dynamically from the coffee objects
-for (let coffee of getCoffeeItems())
+for (let coffeeItem of getCoffeeItems())
     document.getElementById("coffeeSelect")
-            .innerHTML += `<option>${coffee.type}</option>`
+            .innerHTML += `<option>${coffeeItem.coffeeType}</option>`
 
 // create the coffee items the shop sells
 function getCoffeeItems(){
-    let coffees = []
-    coffees.push(new Coffee("Black Coffee", 1.00, 1.50, 2))
-    coffees.push(new Coffee("Sugar & Cream", 2, 2.5, 3))
-    coffees.push(new Coffee("Mocha", 3, 3.5, 4))
-    return coffees
+    let coffeeItems = []
+    coffeeItems.push(new CoffeeItem("Black Coffee", 1.00, 1.50, 2))
+    coffeeItems.push(new CoffeeItem("Sugar & Cream", 2, 2.5, 3))
+    coffeeItems.push(new CoffeeItem("Mocha", 3, 3.5, 4))
+    return coffeeItems
 }
 
 // return all the orders
@@ -61,61 +61,68 @@ function getAllOrders() {
 }
 
 // display all the orders
-function displayAllOrders(orders) {    
-        document.getElementById("viewOrdersDiv").innerHTML = 
-        JSON.parse(orders).map(order =>
+function displayAllOrders(ordersArray) {  
+    document.getElementById("viewOrdersDiv").innerHTML = 
+    JSON.parse(ordersArray)
+        .map(coffeeOrder =>
         `<ul style="list-style-type: none;">
-        <li>${order.email}</li>
-        <li>${order.type}</li>
-        <li>${order.size}</li>
-        <li>$${order.price}</li>
-        <button id="deleteButton" onclick="deleteOrder('${order.email}')">Delete Order</button>
+        <li>${coffeeOrder.email}</li>
+        <li>${coffeeOrder.type}</li>
+        <li>${coffeeOrder.size}</li>
+        <li>$${coffeeOrder.price}</li>
+        <button id="deleteButton" onclick="deleteOrder('${coffeeOrder.email}')">Delete Order</button>
         </ul>`).join('')
 }
 
 // return a single order using an email
-function getOrderByEmail(email) {
-    if (!findOrderTextBox.checkValidity()) return
+function getOrderFromEmail(orderEmail) {
+    if (!findOrderFromEmailTextBox.checkValidity()) return
     let request = new XMLHttpRequest()    
-    request.onload = () => displaySingleOrders(request.responseText)
-    request.open('GET', `${apiUrl}/${email}`)
+    request.onload = () => displaySingleOrder(request.responseText)
+    request.open('GET', `${apiUrl}/${orderEmail}`)
     request.send();
 }
 
 // display a single order
-function displaySingleOrders(result) { 
-    let order = JSON.parse(result)
+function displaySingleOrder(result) { 
+    let coffeeOrder = JSON.parse(result)
+    if (coffeeOrder.message == "Order not found"){
+        document.getElementById("viewOrdersDiv").innerHTML =
+        `<p>Order for that email address does not exist</p>`    
+    }
+    else {
     document.getElementById("viewOrdersDiv").innerHTML =
         `<ul style="list-style-type: none;">
-            <li>${order.email}</li>
-            <li>${order.type}</li>
-            <li>${order.size}</li>
-            <li>$${order.price}</li>            
-            <button id="deleteButton" onclick="deleteOrder('${order.email}')">Delete Order</button>
+            <li>${coffeeOrder.email}</li>
+            <li>${coffeeOrder.type}</li>
+            <li>${coffeeOrder.size}</li>
+            <li>$${coffeeOrder.price}</li>            
+            <button id="deleteButton" onclick="deleteOrder('${coffeeOrder.email}')">Delete Order</button>
         </ul>`
+    }
 }
 
 // delete an order using an email
-function deleteOrder(email) {
+function deleteOrder(orderEmail) {
     let request = new XMLHttpRequest()
     request.onload = () => getAllOrders()
-    request.open('DELETE', `${apiUrl}/${email}`)
+    request.open('DELETE', `${apiUrl}/${orderEmail}`)
     request.send()
 }
 
 // add an order using the form data
-function addOrder() {        
+function addNewOrder() {        
     if (!document.getElementById("addOrderEmailTextBox").checkValidity())  return    
     let request = new XMLHttpRequest()
     request.onload = () => getAllOrders()
     request.open('POST', apiUrl)
     request.setRequestHeader('Content-Type', 'application/json')
-    const [type, price, size, email] = getOrderFromForm()
+    const [coffeeType, coffeePrice, coffeeSize, orderEmail] = getOrderFromForm()
     const body = {
-        email: email,
-        type: type,
-        size: size,
-        price: price,
+        email: orderEmail,
+        type: coffeeType,
+        size: coffeeSize,
+        price: coffeePrice,
     }
     request.send(JSON.stringify(body))
 }
@@ -127,15 +134,13 @@ function getOrderFromForm() {
 
     // size from radio buttons
     let size = ""
-    for (const selectedSize of selectedSizes) 
+    for (const selectedSize of selectSizeRadios) 
         if (selectedSize.checked)
             size = selectedSize.value
 
-    // filter to correct coffee and get the price using the drink size
-    let price = 0
-    for (let coffee of getCoffeeItems())
-        if (coffee.type == type)
-            price = coffee.getPrice(size)
+    //  filter to correct coffee and get the price using the drink size
+     let coffeeItem = getCoffeeItems().filter(c => c.coffeeType === type)
+     let price = coffeeItem[0].getPrice(size)
 
     return [type, price, size, email]
 }
