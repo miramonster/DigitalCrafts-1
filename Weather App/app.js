@@ -5,7 +5,7 @@ const apiKey = '4bc94f2afc12e496789ee0829f4ca267'
 document.getElementById("checkWeatherButton").onclick = () => getWeatherDataFromCityName()
 
 // display the users weather when page loads
-getUserLongLat();
+displayUsersWeatherOnPageLoad();
 
 // return the weather data using a city name
 function getWeatherDataFromCityName(){
@@ -45,4 +45,9 @@ function getWeatherDataFromLongLat(longitude, latitude) {
     fetch(`${apiByLongLatUrl}lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=imperial`)
     .then(response => response.json())
     .then(result => displayWeatherData(result))
+}
+
+// starts the process of showing the users weather when the page loads
+function displayUsersWeatherOnPageLoad(){
+    getUserLongLat()
 }
