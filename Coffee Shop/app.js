@@ -86,8 +86,8 @@ function getOrderFromEmail(orderEmail) {
 }
 
 // display a single order
-function displaySingleOrder(result) { 
-    let coffeeOrder = JSON.parse(result)
+function displaySingleOrder(orderResult) { 
+    let coffeeOrder = JSON.parse(orderResult)
     if (coffeeOrder.message == "Order not found"){
         document.getElementById("viewOrdersDiv").innerHTML =
         `<p>Order for that email address does not exist</p>`    
