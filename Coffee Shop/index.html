@@ -5,7 +5,7 @@
     <body style="display: table-cell; text-align: center;">
         <div id="addOrders" style="padding-top: 10px;">
             New Drink Order Form
-            <form id="addOrderForm">
+            <form>
                 <select id="coffeeSelect"></select>
                 <input type="radio" name="size" value="Small"/> Small
                 <input type="radio" name="size" value="Medium" checked/> Medium
@@ -13,18 +13,18 @@
                 <input type="email" id="addOrderEmailTextBox" placeholder="Email Address (required)" required/>
                 <button id="addOrderButton" style="margin-top: 5px;">Submit Order</button>
             </form><br/>
-            <form id="findOrderForm">
+            <form>
                 Find order by email<br/>
                 <input type="email" id="findOrderByEmailTextBox" placeholder="Email Address (required)" required/>
                 <button id="findOrderButton">Find Order</button>
             </form>
-            <div class="show_all_orders_button">
+            <div>
                 <button id="showAllOrdersButton" style="margin-top: 20px;">Show All Orders</button>
+                <button id="hideAllOrdersButton" style="margin-top: 20px;">Hide All Orders</button>
             </div>
         </div>
         <div id="viewOrdersDiv">
         </div>
     </body>
 </html>
-<script src="Coffee.js"></script>
 <script src="app.js"></script>

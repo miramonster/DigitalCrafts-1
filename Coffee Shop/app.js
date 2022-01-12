@@ -1,19 +1,3 @@
-// html elements
-let addOrderButton = document.getElementById("addOrderButton")
-let showAllButton = document.getElementById("showAllOrdersButton")
-let findOrderButton = document.getElementById("findOrderButton")
-let selectedCoffee = document.getElementById("coffeeSelect")
-let findOrderTextBox = document.getElementById("findOrderByEmailTextBox")
-let selectedSizes = document.querySelectorAll("input[name='size']")
-
-// event handlers
-addOrderButton.onclick = () => addOrder()
-showAllButton.onclick = () => getAllOrders()
-findOrderButton.onclick = () => getOrderByEmail(findOrderTextBox.value)
-
-// api url
-let apiUrl = 'https://troubled-peaceful-hell.glitch.me/orders'
-
 // small class for the coffees
 class Coffee {
     constructor(type, smallPrice, mediumPrice, largePrice) {
@@ -36,16 +20,37 @@ class Coffee {
     }
 }
 
-// create a couple coffees to sell
-let coffees = []
-coffees.push(new Coffee("Black Coffee", 1, 1.5, 2))
-coffees.push(new Coffee("Sugar & Cream", 2, 2.5, 3))
-coffees.push(new Coffee("Mocha", 3, 3.5, 4))
+// api url
+let apiUrl = 'https://troubled-peaceful-hell.glitch.me/orders'
+
+// html elements
+let addOrderButton = document.getElementById("addOrderButton")
+let showAllButton = document.getElementById("showAllOrdersButton")
+let hideAllButton = document.getElementById("hideAllOrdersButton")
+let findOrderButton = document.getElementById("findOrderButton")
+let findOrderTextBox = document.getElementById("findOrderByEmailTextBox")
+let selectedCoffee = document.getElementById("coffeeSelect")
+let selectedSizes = document.querySelectorAll("input[name='size']")
+
+// event handlers
+addOrderButton.onclick = () => addOrder()
+findOrderButton.onclick = () => getOrderByEmail(findOrderTextBox.value)
+showAllButton.onclick = () => getAllOrders()
+hideAllButton.onclick = () => document.getElementById("viewOrdersDiv").innerHTML = ""
 
 // create the coffee selector elements dynamically from the coffee objects
-for (let coffee of coffees)
+for (let coffee of getCoffeeItems())
     document.getElementById("coffeeSelect")
             .innerHTML += `<option>${coffee.type}</option>`
+
+// create the coffee items the shop sells
+function getCoffeeItems(){
+    let coffees = []
+    coffees.push(new Coffee("Black Coffee", 1, 1.5, 2))
+    coffees.push(new Coffee("Sugar & Cream", 2, 2.5, 3))
+    coffees.push(new Coffee("Mocha", 3, 3.5, 4))
+    return coffees
+}
 
 // returns all the orders
 function getAllOrders() {
@@ -56,10 +61,9 @@ function getAllOrders() {
 }
 
 // displays all the orders
-function displayAllOrders(result) {
-    let orders = JSON.parse(result)
+function displayAllOrders(orders) {    
     let viewOrdersDiv = document.getElementById("viewOrdersDiv")
-    viewOrdersDiv.innerHTML = orders.map(order =>
+    viewOrdersDiv.innerHTML = JSON.parse(orders).map(order =>
         `<ul style="list-style-type: none;">
         <li>${order.email}</li>
         <li>${order.type}</li>
@@ -72,17 +76,16 @@ function displayAllOrders(result) {
 // return a single order using an email
 function getOrderByEmail(email) {
     if (!findOrderTextBox.checkValidity()) return
-    findOrderTextBox.value = ""
-    let request = new XMLHttpRequest()
-    request.onload = () => displaySingleOrder(request.responseText)
+    let request = new XMLHttpRequest()    
+    request.onload = () => displaySingleOrders(request.responseText)
     request.open('GET', `${apiUrl}/${email}`)
     request.send();
 }
 
 // displays a single order
-function displaySingleOrder(result) {
+function displaySingleOrders(result) { 
     let order = JSON.parse(result)
-    let viewOrdersDiv = document.getElementById("viewOrders")
+    let viewOrdersDiv = document.getElementById("viewOrdersDiv")
     viewOrdersDiv.innerHTML =
         `<ul style="list-style-type: none;">
             <li>${order.email}</li>
@@ -101,10 +104,9 @@ function deleteOrder(email) {
     request.send()
 }
 
-// adds an order
-function addOrder() {    
-    if (!document.getElementById("addOrderEmailTextBox").checkValidity())  return
-
+// adds an order using the form data
+function addOrder() {        
+    if (!document.getElementById("addOrderEmailTextBox").checkValidity())  return    
     let request = new XMLHttpRequest()
     request.onload = () => getAllOrders()
     request.open('POST', apiUrl)
@@ -119,27 +121,22 @@ function addOrder() {
     request.send(JSON.stringify(body))
 }
 
-// gets new order info from the html form
+// gets new order info from the form
 function getNewOrderInfo() {
-    let type = ""
-    let price = 0;
-    let size = ""
-    let email = ""
-
-    // coffee type from dropdown
-    type = document.getElementById("coffeeSelect").value
-
-    // email 
-    email = document.getElementById("addOrderEmailTextBox").value
+    let type = document.getElementById("coffeeSelect").value
+    let email = document.getElementById("addOrderEmailTextBox").value
 
     // size from radio buttons
+    let size = ""
     for (const selectedSize of selectedSizes) 
         if (selectedSize.checked)
             size = selectedSize.value
 
     // filter to correct coffee and get the price using the drink size
-    let coffee = coffees.filter(c => c.type === type)    
-    price = coffee.getPrice(size)    
+    let price = 0
+    for (let coffee of getCoffeeItems())
+        if (coffee.type == type)
+            price = coffee.getPrice(size)
 
     return [type, price, size, email]
 }
