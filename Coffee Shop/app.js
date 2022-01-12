@@ -53,6 +53,7 @@ function getCoffeeItems(){
     return coffeeItems
 }
 
+
 // return all the orders
 function getAllOrders() {
     let request = new XMLHttpRequest()
