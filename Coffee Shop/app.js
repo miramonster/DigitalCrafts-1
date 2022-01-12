@@ -29,7 +29,6 @@ let showAllOrdersButton = document.getElementById("showAllOrdersButton")
 let hideAllOrdersButton = document.getElementById("hideAllOrdersButton")
 let findOrderFromEmailButton = document.getElementById("findOrderButton")
 let findOrderFromEmailTextBox = document.getElementById("findOrderByEmailTextBox")
-let selectCoffeeList = document.getElementById("coffeeSelect")
 let sizeRadios = document.querySelectorAll("input[name='size']")
 
 // event handlers
