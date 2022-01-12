@@ -7,7 +7,7 @@ class Coffee {
         this.largePrice = largePrice
     }
 
-    // returns the price based on the drink size given
+    // return the price based on the drink size given
     getPrice (drinkSize){
         switch (drinkSize){
             case "Small":
@@ -46,7 +46,7 @@ for (let coffee of getCoffeeItems())
 // create the coffee items the shop sells
 function getCoffeeItems(){
     let coffees = []
-    coffees.push(new Coffee("Black Coffee", 1, 1.5, 2))
+    coffees.push(new Coffee("Black Coffee", 1.00, 1.50, 2))
     coffees.push(new Coffee("Sugar & Cream", 2, 2.5, 3))
     coffees.push(new Coffee("Mocha", 3, 3.5, 4))
     return coffees
