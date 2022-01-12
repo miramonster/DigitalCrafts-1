@@ -4,8 +4,8 @@ const apiKey = '4bc94f2afc12e496789ee0829f4ca267'
 
 document.getElementById("checkWeatherButton").onclick = () => getWeatherDataFromCityName()
 
-// display the users weather when page loads
-displayUsersWeatherOnPageLoad();
+// starts the process of displays the users weather when the page loads
+getUserLongLat();
 
 // return the weather data using a city name
 function getWeatherDataFromCityName(){
@@ -17,8 +17,7 @@ function getWeatherDataFromCityName(){
 
 // display the weather data
 function displayWeatherData(weatherData){
-    let weatherDataDiv = document.getElementById("weatherDataDiv")
-    weatherDataDiv.innerHTML = formatWeatherData(weatherData)
+    document.getElementById("weatherDataDiv").innerHTML = formatWeatherData(weatherData)
 }
 
 // format the weather data for display
@@ -45,9 +44,4 @@ function getWeatherDataFromLongLat(longitude, latitude) {
     fetch(`${apiByLongLatUrl}lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=imperial`)
     .then(response => response.json())
     .then(result => displayWeatherData(result))
-}
-
-// starts the process of showing the users weather when the page loads
-function displayUsersWeatherOnPageLoad(){
-    getUserLongLat()
 }
