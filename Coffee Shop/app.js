@@ -136,13 +136,13 @@ function getOrderFromForm() {
 
     // get the coffee size from the selected radio button
     let size = ""
-    for (const selectedSize of selectSizeRadios) 
-        if (selectedSize.checked)
-            size = selectedSize.value
+    for (const selectedSizeRadio of selectSizeRadios) 
+        if (selectedSizeRadio.checked)
+            size = selectedSizeRadio.value
 
     //  filter to the correct coffee using the coffee type
     //  and get the price using the size of the drink
-     let coffeeItem = getCoffeeItems().filter(c => c.coffeeType === type)
+     let coffeeItem = getCoffeeItems().filter(c => c.coffeeType == type)
      let price = coffeeItem[0].getPrice(size)
 
     return [type, price, size, email]
