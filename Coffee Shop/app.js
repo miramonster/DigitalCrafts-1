@@ -1,4 +1,4 @@
-// small class for the coffees
+// small coffee item class
 class Coffee {
     constructor(type, smallPrice, mediumPrice, largePrice) {
         this.type = type
@@ -52,7 +52,7 @@ function getCoffeeItems(){
     return coffees
 }
 
-// returns all the orders
+// return all the orders
 function getAllOrders() {
     let request = new XMLHttpRequest()
     request.onload = () => displayAllOrders(request.responseText)
@@ -60,7 +60,7 @@ function getAllOrders() {
     request.send();
 }
 
-// displays all the orders
+// display all the orders
 function displayAllOrders(orders) {    
     let viewOrdersDiv = document.getElementById("viewOrdersDiv")
     viewOrdersDiv.innerHTML = JSON.parse(orders).map(order =>
@@ -82,7 +82,7 @@ function getOrderByEmail(email) {
     request.send();
 }
 
-// displays a single order
+// display a single order
 function displaySingleOrders(result) { 
     let order = JSON.parse(result)
     let viewOrdersDiv = document.getElementById("viewOrdersDiv")
@@ -96,7 +96,7 @@ function displaySingleOrders(result) {
         </ul>`
 }
 
-// deletes an order using an email
+// delete an order using an email
 function deleteOrder(email) {
     let request = new XMLHttpRequest()
     request.onload = () => getAllOrders()
@@ -104,14 +104,14 @@ function deleteOrder(email) {
     request.send()
 }
 
-// adds an order using the form data
+// add an order using the form data
 function addOrder() {        
     if (!document.getElementById("addOrderEmailTextBox").checkValidity())  return    
     let request = new XMLHttpRequest()
     request.onload = () => getAllOrders()
     request.open('POST', apiUrl)
     request.setRequestHeader('Content-Type', 'application/json')
-    const [type, price, size, email] = getNewOrderInfo()
+    const [type, price, size, email] = getOrderFromForm()
     const body = {
         email: email,
         type: type,
@@ -121,8 +121,8 @@ function addOrder() {
     request.send(JSON.stringify(body))
 }
 
-// gets new order info from the form
-function getNewOrderInfo() {
+// return order data from the form
+function getOrderFromForm() {
     let type = document.getElementById("coffeeSelect").value
     let email = document.getElementById("addOrderEmailTextBox").value
 
