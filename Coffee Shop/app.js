@@ -48,7 +48,9 @@ function getCoffeeItems(){
     let coffeeItems = []
     coffeeItems.push(new CoffeeItem("Black Coffee", 1.00, 1.50, 2))
     coffeeItems.push(new CoffeeItem("Sugar & Cream", 2, 2.5, 3))
-    coffeeItems.push(new CoffeeItem("Mocha", 3, 3.5, 4))
+    coffeeItems.push(new CoffeeItem("Hot Chocolate", 2, 2.5, 3))
+    coffeeItems.push(new CoffeeItem("Mochachino", 3, 3.5, 4))
+    coffeeItems.push(new CoffeeItem("Espresso", 2, 3.5, 5))
     return coffeeItems
 }
 
@@ -132,13 +134,14 @@ function getOrderFromForm() {
     let type = document.getElementById("coffeeSelect").value
     let email = document.getElementById("addOrderEmailTextBox").value
 
-    // size from radio buttons
+    // get the coffee size from the selected radio button
     let size = ""
     for (const selectedSize of selectSizeRadios) 
         if (selectedSize.checked)
             size = selectedSize.value
 
-    //  filter to correct coffee and get the price using the drink size
+    //  filter to the correct coffee using the coffee type
+    //  and get the price using the size of the drink
      let coffeeItem = getCoffeeItems().filter(c => c.coffeeType === type)
      let price = coffeeItem[0].getPrice(size)
 
