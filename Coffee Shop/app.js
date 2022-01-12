@@ -12,48 +12,60 @@ showAllButton.onclick = () => getAllOrders()
 findOrderButton.onclick = () => getOrderByEmail(findOrderTextBox.value)
 
 // api url
-let url = 'https://troubled-peaceful-hell.glitch.me/orders'
+let apiUrl = 'https://troubled-peaceful-hell.glitch.me/orders'
 
 // small class for the coffees
-class CoffeeDrink {
-    constructor(name, smallPrice, mediumPrice, largePrice) {
-        this.name = name
+class Coffee {
+    constructor(type, smallPrice, mediumPrice, largePrice) {
+        this.type = type
         this.smallPrice = smallPrice
         this.mediumPrice = mediumPrice
         this.largePrice = largePrice
+    }
+
+    // returns the price based on the drink size given
+    getPrice (drinkSize){
+        switch (drinkSize){
+            case "Small":
+                return this.smallPrice
+            case "Medium":
+                return this.mediumPrice
+            case "Large":
+                return this.largePrice
+        }
     }
 }
 
 // create a couple coffees to sell
 let coffees = []
-coffees.push(new CoffeeDrink("Black Coffee", 1, 1.5, 2))
-coffees.push(new CoffeeDrink("Sugar & Cream", 2, 2.5, 3))
-coffees.push(new CoffeeDrink("Mocha", 3, 3.5, 4))
+coffees.push(new Coffee("Black Coffee", 1, 1.5, 2))
+coffees.push(new Coffee("Sugar & Cream", 2, 2.5, 3))
+coffees.push(new Coffee("Mocha", 3, 3.5, 4))
 
-// create out coffee selector elements dynamically from the coffee objects
+// create the coffee selector elements dynamically from the coffee objects
 for (let coffee of coffees)
     document.getElementById("coffeeSelect")
-            .innerHTML += `<option>${coffee.name}</option>`
+            .innerHTML += `<option>${coffee.type}</option>`
 
 // returns all the orders
 function getAllOrders() {
     let request = new XMLHttpRequest()
     request.onload = () => displayAllOrders(request.responseText)
-    request.open('GET', url)
+    request.open('GET', apiUrl)
     request.send();
 }
 
 // displays all the orders
 function displayAllOrders(result) {
     let orders = JSON.parse(result)
-    let viewOrdersDiv = document.getElementById("viewOrders")
-    viewOrdersDiv.innerHTML = orders.map((order) =>
+    let viewOrdersDiv = document.getElementById("viewOrdersDiv")
+    viewOrdersDiv.innerHTML = orders.map(order =>
         `<ul style="list-style-type: none;">
-            <li>${order.email}</li>
-            <li>${order.type}</li>
-            <li>${order.size}</li>
-            <li>$${order.price}</li>
-            <button id="deleteButton" onclick="deleteOrder('${order.email}')">Delete Order</button>
+        <li>${order.email}</li>
+        <li>${order.type}</li>
+        <li>${order.size}</li>
+        <li>$${order.price}</li>
+        <button id="deleteButton" onclick="deleteOrder('${order.email}')">Delete Order</button>
         </ul>`).join('')
 }
 
@@ -63,7 +75,7 @@ function getOrderByEmail(email) {
     findOrderTextBox.value = ""
     let request = new XMLHttpRequest()
     request.onload = () => displaySingleOrder(request.responseText)
-    request.open('GET', `${url}/${email}`)
+    request.open('GET', `${apiUrl}/${email}`)
     request.send();
 }
 
@@ -85,7 +97,7 @@ function displaySingleOrder(result) {
 function deleteOrder(email) {
     let request = new XMLHttpRequest()
     request.onload = () => getAllOrders()
-    request.open('DELETE', `${url}/${email}`)
+    request.open('DELETE', `${apiUrl}/${email}`)
     request.send()
 }
 
@@ -95,12 +107,12 @@ function addOrder() {
 
     let request = new XMLHttpRequest()
     request.onload = () => getAllOrders()
-    request.open('POST', url)
+    request.open('POST', apiUrl)
     request.setRequestHeader('Content-Type', 'application/json')
-    const [coffeeType, price, size, email] = getNewOrderInfo()
+    const [type, price, size, email] = getNewOrderInfo()
     const body = {
         email: email,
-        type: coffeeType,
+        type: type,
         size: size,
         price: price,
     }
@@ -125,48 +137,9 @@ function getNewOrderInfo() {
         if (selectedSize.checked)
             size = selectedSize.value
 
-    // price from combination of type and size
-    switch (type){
-        case "Black":
-            switch(size){
-                case "Small":
-                    price = 1;
-                    break;
-                case "Medium":
-                    price = 1.5;
-                    break;
-                case "Large":
-                    price = 2.0;
-                    break;
-            }
-            break;
-        case "Cream & Sugar":
-            switch(size){
-                case "Small":
-                    price = 1.50;
-                    break;
-                case "Medium":
-                    price = 2.0;
-                    break;
-                case "Large":
-                    price = 2.50;
-                    break;
-            }
-            break;
-        case "Mocha":
-            switch(size){
-                case "Small":
-                    price = 1;
-                    break;
-                case "Medium":
-                    price = 1.5;
-                    break;
-                case "Large":
-                    price = 2.0;
-                    break;
-            }
-            break;
-    }
+    // filter to correct coffee and get the price using the drink size
+    let coffee = coffees.filter(c => c.type === type)    
+    price = coffee.getPrice(size)    
 
     return [type, price, size, email]
 }
