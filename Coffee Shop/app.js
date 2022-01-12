@@ -72,7 +72,8 @@ function displayAllOrders(ordersArray) {
         <li>${coffeeOrder.size}</li>
         <li>$${coffeeOrder.price}</li>
         <button id="deleteButton" onclick="deleteOrder('${coffeeOrder.email}')">Delete Order</button>
-        </ul>`).join('')
+        </ul>`)
+        .join('')
 }
 
 // return a single order using an email
