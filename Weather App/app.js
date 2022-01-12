@@ -4,7 +4,7 @@ const apiKey = '4bc94f2afc12e496789ee0829f4ca267'
 
 document.getElementById("checkWeatherButton").onclick = () => getWeatherDataFromCityName()
 
-// starts the process of displays the users weather when the page loads
+// start the process of displaying weather based on the users location when the page loads
 getUserLongLat();
 
 // return the weather data using a city name
@@ -15,17 +15,18 @@ function getWeatherDataFromCityName(){
     .then(result => displayWeatherData(result))
 }
 
-// display the weather data
-function displayWeatherData(weatherData){
-    document.getElementById("weatherDataDiv").innerHTML = formatWeatherData(weatherData)
+// return the weather data from a longitdue and latitude
+function getWeatherDataFromLongLat(longitude, latitude) {  
+    fetch(`${apiByLongLatUrl}lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=imperial`)
+    .then(response => response.json())
+    .then(result => displayWeatherData(result))
 }
 
-// format the weather data for display
-function formatWeatherData(weatherData){
-    return `
-    <ul style='list-style-type: none'>
+// display the weather data
+function displayWeatherData(weatherData){
+    document.getElementById("weatherDisplayDiv").innerHTML = 
+    `<ul style='list-style-type: none'>
         <li>City: ${weatherData.name}</li>
-        <li>Current Temp: ${weatherData.main.temp} degrees</li>
         <li>Max Temp: ${weatherData.main.temp_max} degrees</li>
         <li>Min Temp: ${weatherData.main.temp_min} degrees</li>
         <li>Pressure: ${weatherData.main.pressure} atmospheres</li>
@@ -37,11 +38,4 @@ function getUserLongLat(){
     if ('geolocation' in navigator)
         navigator.geolocation.getCurrentPosition(position => 
             getWeatherDataFromLongLat(position.coords.longitude, position.coords.latitude))
-}
-
-// return the weather data from a longitdue and latitude
-function getWeatherDataFromLongLat(longitude, latitude) {  
-    fetch(`${apiByLongLatUrl}lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=imperial`)
-    .then(response => response.json())
-    .then(result => displayWeatherData(result))
 }

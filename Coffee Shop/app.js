@@ -50,9 +50,9 @@ function getCoffeeItems(){
     coffeeItems.push(new CoffeeItem("Hot Chocolate", 2, 2.5, 3))
     coffeeItems.push(new CoffeeItem("Mochachino", 3, 3.5, 4))
     coffeeItems.push(new CoffeeItem("Espresso", 2, 3.5, 5))
+    coffeeItems.push(new CoffeeItem("Water", 0, 0, 0))
     return coffeeItems
 }
-
 
 // return all the orders
 function getAllOrders() {
