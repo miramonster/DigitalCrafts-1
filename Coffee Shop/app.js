@@ -38,7 +38,7 @@ findOrderButton.onclick = () => getOrderByEmail(findOrderTextBox.value)
 showAllButton.onclick = () => getAllOrders()
 hideAllButton.onclick = () => document.getElementById("viewOrdersDiv").innerHTML = ""
 
-// create the coffee selector elements dynamically from the coffee objects
+// create the coffee type selector elements dynamically from the coffee objects
 for (let coffee of getCoffeeItems())
     document.getElementById("coffeeSelect")
             .innerHTML += `<option>${coffee.type}</option>`
@@ -62,8 +62,8 @@ function getAllOrders() {
 
 // display all the orders
 function displayAllOrders(orders) {    
-    let viewOrdersDiv = document.getElementById("viewOrdersDiv")
-    viewOrdersDiv.innerHTML = JSON.parse(orders).map(order =>
+        document.getElementById("viewOrdersDiv").innerHTML = 
+        JSON.parse(orders).map(order =>
         `<ul style="list-style-type: none;">
         <li>${order.email}</li>
         <li>${order.type}</li>
@@ -85,8 +85,7 @@ function getOrderByEmail(email) {
 // display a single order
 function displaySingleOrders(result) { 
     let order = JSON.parse(result)
-    let viewOrdersDiv = document.getElementById("viewOrdersDiv")
-    viewOrdersDiv.innerHTML =
+    document.getElementById("viewOrdersDiv").innerHTML =
         `<ul style="list-style-type: none;">
             <li>${order.email}</li>
             <li>${order.type}</li>
