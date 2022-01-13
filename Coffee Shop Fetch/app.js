@@ -31,7 +31,7 @@ let sizeRadios = document.querySelectorAll("input[name='size']")
 
 // event handlers
 addNewOrderButton.onclick = () => addNewOrder()
-showAllOrdersButton.onclick = () => getAllOrders()
+showAllOrdersButton.onclick = () => ingredientTest()
 hideAllOrdersButton.onclick = () => document.getElementById("viewOrdersDiv").innerHTML = ""
 
 // create the coffee type selector elements dynamically from the coffee objects
@@ -52,7 +52,7 @@ function getCoffeeItems(){
 
 
 // return all the orders
-function getAllOrders() {
+function ingredientTest() {
     fetch(apiUrl)
     .then(response => response.json()) 
     .then(result => displayAllOrders(result))
@@ -78,7 +78,7 @@ function deleteOrder(orderEmail) {
         method: "DELETE",
         headers: { "Content-Type":"application/json" },
     })
-    .then(() => getAllOrders())
+    .then(() => ingredientTest())
 }
 
 // add an order using the form data
@@ -97,7 +97,7 @@ function addNewOrder() {
         }),
         headers: {"Content-type": "application/json; charset=UTF-8"}
     })
-    .then(() => getAllOrders())
+    .then(() => ingredientTest())
 }
 
 // return order data from the form
