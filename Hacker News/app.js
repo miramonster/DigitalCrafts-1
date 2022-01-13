@@ -2,19 +2,17 @@ const hackerNewsIDUrl = 'https://hacker-news.firebaseio.com/v0/topstories.json?p
 const hackerNewsLinkUrlBegin = 'https://hacker-news.firebaseio.com/v0/item/' 
 const hackerNewsLinkUrlEnd = '.json?print=pretty'
 
-// TODO STILL: Convert to using ASYNC functions instead
-
-GetHackerNewsIds()
+getHackerNewsIds()
 
 // return the hacker news item IDs
-function GetHackerNewsIds(){
+function getHackerNewsIds(){
     fetch(hackerNewsIDUrl)
     .then(response => response.json())
     .then(result => GetAllHackerNewsItems(result))
 }
 
 // return all the hacker news items using IDs
-async function GetAllHackerNewsItems(hackerNewsIDs){
+async function getAllHackerNewsItems(hackerNewsIDs){
     let data = []    
     for (let hackerNewsID of hackerNewsIDs){
         data.push(fetch(`${hackerNewsLinkUrlBegin}${hackerNewsID}${hackerNewsLinkUrlEnd}`))
@@ -23,7 +21,7 @@ async function GetAllHackerNewsItems(hackerNewsIDs){
 }
 
 // add a hacker news item to the feed
-function DisplayHackerNewsItem(hackerNew){
+function displayHackerNewsItem(hackerNew){
     hackerNew.then(hackerNews => {
     let hackerNewsDiv = document.getElementById("hackerNewsDiv")
     hackerNewsDiv.innerHTML += `<h3><a href=${hackerNews.url}>${hackerNews.title}</a> by ${hackerNews.by} (${ConvertTime(hackerNews.time)})</h3>`
@@ -31,6 +29,6 @@ function DisplayHackerNewsItem(hackerNew){
 }
 
 // convert hacker news unix time to readable date and time
-function ConvertTime(unixTime){
+function convertTime(unixTime){
     return new Date(unixTime * 1000)
 }
