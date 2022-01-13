@@ -11,9 +11,8 @@ function GetHackerNewsIds(){
 }
 
 function GetHackerNewsLinks(hackerNewsIDs){
-    console.log(hackerNewsIDs)
-    for (let x of hackerNewsIDs){
-        fetch(`${hackerNewsLinkUrlBegin}${x}${hackerNewsLinkUrlEnd}`)
+    for (let hackerNewsID of hackerNewsIDs){
+        fetch(`${hackerNewsLinkUrlBegin}${hackerNewsID}${hackerNewsLinkUrlEnd}`)
         .then(response => response.json())
         .then(result => AddHackerNewsItem(result))
     }
@@ -21,5 +20,9 @@ function GetHackerNewsLinks(hackerNewsIDs){
 
 function AddHackerNewsItem(hackerNews){
     let hackerNewsDiv = document.getElementById("hackerNewsDiv")
-    hackerNewsDiv.innerHTML += `<h3><a href=${hackerNews.url}>${hackerNews.title}</a></h3>`
+    hackerNewsDiv.innerHTML += `<h3><a href=${hackerNews.url}>${hackerNews.title}</a> by ${hackerNews.by} (${ConvertTime(hackerNews.time)})</h3>`
+}
+
+function ConvertTime(unixTime){
+    return new Date(unixTime * 1000)
 }
