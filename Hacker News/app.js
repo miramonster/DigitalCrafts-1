@@ -4,25 +4,31 @@ const hackerNewsLinkUrlEnd = '.json?print=pretty'
 
 GetHackerNewsIds()
 
+// return the hacker news item IDs
 function GetHackerNewsIds(){
     fetch(hackerNewsIDUrl)
     .then(response => response.json())
-    .then(result => GetHackerNewsLinks(result))
+    .then(result => GetAllHackerNewsItems(result))
 }
 
-function GetHackerNewsLinks(hackerNewsIDs){
+// return all the hacker news items using IDs
+async function GetAllHackerNewsItems(hackerNewsIDs){
+    let data = []    
     for (let hackerNewsID of hackerNewsIDs){
-        fetch(`${hackerNewsLinkUrlBegin}${hackerNewsID}${hackerNewsLinkUrlEnd}`)
-        .then(response => response.json())
-        .then(result => AddHackerNewsItem(result))
-    }
+        data.push(fetch(`${hackerNewsLinkUrlBegin}${hackerNewsID}${hackerNewsLinkUrlEnd}`))
+    }    
+    Promise.allSettled(data).then(response => response.forEach(result => DisplayHackerNewsItem(result.value.json())))
 }
 
-function AddHackerNewsItem(hackerNews){
+// add a hacker news item to the feed
+function DisplayHackerNewsItem(hackerNew){
+    hackerNew.then(hackerNews => {
     let hackerNewsDiv = document.getElementById("hackerNewsDiv")
     hackerNewsDiv.innerHTML += `<h3><a href=${hackerNews.url}>${hackerNews.title}</a> by ${hackerNews.by} (${ConvertTime(hackerNews.time)})</h3>`
+    })
 }
 
+// convert hacker news unix time to readable date and time
 function ConvertTime(unixTime){
     return new Date(unixTime * 1000)
 }
