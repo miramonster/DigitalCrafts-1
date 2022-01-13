@@ -2,8 +2,6 @@ const hackerNewsIDUrl = 'https://hacker-news.firebaseio.com/v0/topstories.json?p
 const hackerNewsLinkUrlBegin = 'https://hacker-news.firebaseio.com/v0/item/' 
 const hackerNewsLinkUrlEnd = '.json?print=pretty'
 
-// TODO STILL: Convert to using ASYNC functions instead
-
 GetHackerNewsIds()
 
 // return the hacker news item IDs
